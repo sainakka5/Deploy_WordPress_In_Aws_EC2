@@ -27,7 +27,7 @@ Launch an EC2 Instance :
 
 Here it is created a EC2 instance with my resources successfully, from this Public IP Address I want to connect with this server using Local Terminal.
 
-ssh -i .\sainivesh.pem ubuntu@54.226.182.55
+    ssh -i .\sainivesh.pem ubuntu@54.226.182.55
 
  ![image](https://github.com/sainakka5/Deploy_WordPress_In_Aws_EC2/assets/136338958/aa777866-98ad-470f-9c13-4bffa6be4365)
 
@@ -35,8 +35,8 @@ ssh -i .\sainivesh.pem ubuntu@54.226.182.55
 Update the package list and install Apache:
 By giving the below commands, we can update our server and install the Apache2 Automatically. Apache2 is works as the webserver for WORDPRESS Applications.
 
-sudo apt update
-sudo apt install apache2 -y
+    sudo apt update
+    sudo apt install apache2 -y
 
  ![image](https://github.com/sainakka5/Deploy_WordPress_In_Aws_EC2/assets/136338958/b0852e08-de13-42b2-b831-2fb24b3118c4)
 
@@ -46,7 +46,7 @@ Install MySQL:
 For database software, WordPress functions best with MySQL version 5.6+, So I installed latest Version.
 MySQL is a DBMS (database management system) used by WordPress to store information. WordPress MySQL plays a critical part in WordPress's storage of user information, posts, comments, settings, and much more. Without MySQL, a WordPress website cannot function.
 
-sudo apt install mysql-server -y
+    sudo apt install mysql-server -y
 
  ![image](https://github.com/sainakka5/Deploy_WordPress_In_Aws_EC2/assets/136338958/b56a4414-cb0c-44b1-a1d2-67840724392b)
 
@@ -63,7 +63,7 @@ Install PHP and required modules:
 Installing PHP along with libapache2-mod-php and php-mysql is crucial for setting up a LAMP (Linux, Apache, MySQL, PHP) stack, which is a common environment for hosting web applications. This setup allows your web server to handle dynamic content and interact with databases, making it possible to run a wide variety of web applications, including WordPress, which relies on PHP and MySQL.
 The command “sudo apt install php libapache2-mod-php php-mysql -y” is used to install PHP and the necessary modules required to run PHP applications with an Apache web server and MySQL database. Here’s a breakdown of the components and their uses:
 
-sudo apt install php libapache2-mod-php php-mysql -y
+    sudo apt install php libapache2-mod-php php-mysql -y
 
  ![image](https://github.com/sainakka5/Deploy_WordPress_In_Aws_EC2/assets/136338958/8992c6c9-6073-4c51-877a-269541cf91e2)
 
@@ -75,11 +75,11 @@ sudo mysql    #commad to Log in to MySQL
 
 I had Created a database and user, and grant all privileges as below :
 
-CREATE DATABASE wordpress;
-CREATE USER 'wordpressuser'@'localhost' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpressuser'@'localhost';
-FLUSH PRIVILEGES;
-EXIT;
+    CREATE DATABASE wordpress;
+    CREATE USER 'wordpressuser'@'localhost' IDENTIFIED BY 'password';
+    GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpressuser'@'localhost';
+    FLUSH PRIVILEGES;
+    EXIT;
 
 ![image](https://github.com/sainakka5/Deploy_WordPress_In_Aws_EC2/assets/136338958/eebad610-2daf-460d-bae2-3a6cecb8ca82)
  
@@ -89,18 +89,17 @@ Download WordPress Application from the official website in tar format and extra
 
 Command:
 
-cd /tmp
-wget https://wordpress.org/latest.tar.gz
-tar -xzf latest.tar.gz
-
-sudo mv wordpress /var/www/html/      # it will move all files in wordpress to /var/www/html 
+    cd /tmp
+    wget https://wordpress.org/latest.tar.gz
+    tar -xzf latest.tar.gz
+    sudo mv wordpress /var/www/html/      # it will move all files in wordpress to /var/www/html 
 
 Set the correct permissions:
 
 Setting the correct permissions for the WordPress files involves two commands. First, sudo chown -R www-data:www-data /var/www/html/wordpress changes the ownership of the WordPress directory and its contents to the www-data user and group, which is the default user that Apache runs as. This ensures that the web server can read and write to these files. Second, sudo chmod -R 755 /var/www/html/wordpress sets the permissions so that the owner has full read, write, and execute permissions, while others have read and execute permissions. This combination ensures that WordPress operates smoothly and securely.
 
-sudo chown -R www-data:www-data /var/www/html/wordpress
-sudo chmod -R 755 /var/www/html/wordpress
+    sudo chown -R www-data:www-data /var/www/html/wordpress
+    sudo chmod -R 755 /var/www/html/wordpress
 
  ![image](https://github.com/sainakka5/Deploy_WordPress_In_Aws_EC2/assets/136338958/7519f35d-4520-42a4-a133-316a55a103eb)
 
@@ -108,18 +107,19 @@ sudo chmod -R 755 /var/www/html/wordpress
 Create the WordPress configuration file:
 
 cd /var/www/html/wordpress
-sudo cp wp-config-sample.php wp-config.php
+        
+    sudo cp wp-config-sample.php wp-config.php
 
 Edit the WordPress configuration file to add the database details I had given in mysql properly.
 
-sudo nano wp-config.php
+    sudo nano wp-config.php
 
 Update the following lines in that file as shown below,
 
-define('DB_NAME', 'wordpress');
-define('DB_USER', 'wordpressuser');
-define('DB_PASSWORD', 'password');
-define('DB_HOST', 'localhost');
+    define('DB_NAME', 'wordpress');
+    define('DB_USER', 'wordpressuser');
+    define('DB_PASSWORD', 'password');
+    define('DB_HOST', 'localhost');
 
 ![image](https://github.com/sainakka5/Deploy_WordPress_In_Aws_EC2/assets/136338958/dcba47c1-1d94-49d7-8b70-0ddb4170f31e)
  
@@ -127,8 +127,9 @@ define('DB_HOST', 'localhost');
 Restart Apache:
  It will restart the service Apache , It will update all details of WordPress to Apache and make a webserver running with WordPress Application.
 # it is the default page in Apache , if we don’t remove it will show the content of this file.
-sudo rm /var/www/html/index.html  
-sudo systemctl restart apache2
+
+    sudo rm /var/www/html/index.html  
+    sudo systemctl restart apache2
 
 After that open a web browser and enter the IP Address of this Instance running with WordPress Application and Enter the search button, we will see the Word Press application setup page which is Successfully running.
 
